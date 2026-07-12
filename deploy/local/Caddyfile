@@ -1,0 +1,26 @@
+# Caddy reverse proxy configuration for the enterprise adapter service.
+#
+# Local dev: uses localhost with an auto-generated self-signed cert.
+# Production: replace "localhost" with your real domain and Caddy will
+#             automatically fetch a Let's Encrypt certificate.
+
+localhost {
+    # Forward all traffic to the adapter service container
+    reverse_proxy enterprise-adapters:8080
+
+    # /healthz and /readyz are public (no auth header needed)
+    # All other paths require a Bearer token — enforced by the adapter itself.
+
+    # Optional: add response headers for security hardening
+    header {
+        X-Content-Type-Options nosniff
+        X-Frame-Options DENY
+        Referrer-Policy no-referrer
+        -Server
+    }
+
+    # Access log in JSON for easy ingestion into any log aggregator
+    log {
+        format json
+    }
+}

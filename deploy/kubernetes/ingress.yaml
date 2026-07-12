@@ -1,0 +1,34 @@
+# Kubernetes Ingress with TLS via cert-manager.
+#
+# Prerequisites:
+#   kubectl apply -f https://github.com/cert-manager/cert-manager/releases/latest/download/cert-manager.yaml
+#
+# Then apply:
+#   kubectl apply -f deploy/kubernetes/ingress.yaml
+#
+# Replace enterprise-adapters.example.com with your real domain.
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: enterprise-adapters
+  namespace: enterprise-adapters
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts:
+        - enterprise-adapters.example.com
+      secretName: enterprise-adapters-tls
+  rules:
+    - host: enterprise-adapters.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: enterprise-adapters
+                port:
+                  number: 8080

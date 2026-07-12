@@ -1,0 +1,44 @@
+# TLS via Caddy reverse proxy
+# Caddy auto-provisions HTTPS certs from Let's Encrypt when your domain is set.
+# For local dev it issues a self-signed cert trusted by the system keychain.
+#
+# Usage:
+#   docker compose -f deploy/local/docker-compose-tls.yml up --build
+#
+# Then access:
+#   https://localhost/healthz         (no token needed)
+#   https://localhost/ -H "Authorization: Bearer <ADAPTER_API_KEY>"
+
+services:
+  enterprise-adapters:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    image: enterprise-adapters:local
+    # Do NOT expose 8080 directly — only Caddy should reach it
+    expose:
+      - "8080"
+    environment:
+      ADAPTER_ENV: local
+      ADAPTER_API_KEY: ${ADAPTER_API_KEY:-}         # set this to a real secret
+      AUDIT_DB_PATH: /var/lib/enterprise-adapters/audit.sqlite3
+      APPROVAL_DB_PATH: /var/lib/enterprise-adapters/approvals.sqlite3
+    volumes:
+      - ../../var/enterprise-adapters:/var/lib/enterprise-adapters
+    command: ["python", "-m", "enterprise_adapters.server"]
+
+  caddy:
+    image: caddy:2-alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - enterprise-adapters
+
+volumes:
+  caddy_data:
+  caddy_config:

@@ -37,8 +37,11 @@ class KnowledgeSourceAdapter(Protocol):
 class RuntimeMetadataAdapter(Protocol):
     """Read-only runtime discovery contract."""
 
-    def list_targets(self) -> list[ReadOnlyResource]:  # pragma: no cover
-        """List runtime targets that can be inspected."""
+    def list_runtime_tools(self) -> list[ReadOnlyResource]:  # pragma: no cover
+        """List discoverable read-only runtime tools."""
+
+    def list_case_types_or_equivalent(self) -> list[ReadOnlyResource]:  # pragma: no cover
+        """List discoverable domain objects or case-like targets."""
 
     def get_metadata(self, target_id: str) -> dict[str, object]:  # pragma: no cover
         """Return runtime metadata for a target."""

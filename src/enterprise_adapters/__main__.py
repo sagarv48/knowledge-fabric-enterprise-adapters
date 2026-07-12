@@ -6,6 +6,7 @@ from enterprise_adapters.contracts import AdapterContext
 def main() -> int:
     context = AdapterContext(adapter_name="enterprise-adapters", environment="local")
     print(f"Phase 3 adapter layer initialized for {context.environment}.")
+    print("Read-only discovery tools should come before any write-capable action.")
     return 0
 
 

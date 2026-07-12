@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: enterprise-adapters-config
+  namespace: enterprise-adapters
+data:
+  ADAPTER_ENV: production
+  KNOWLEDGE_FABRIC_URL: https://knowledge-fabric.internal.example
+  INTENT_FABRIC_URL: https://intent-fabric.internal.example
+  APPROVAL_DB_PATH: /var/lib/enterprise-adapters/approvals.sqlite3

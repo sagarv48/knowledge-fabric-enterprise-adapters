@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: enterprise-adapters
+  namespace: enterprise-adapters
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: enterprise-adapters
+  template:
+    metadata:
+      labels:
+        app: enterprise-adapters
+    spec:
+      containers:
+        - name: enterprise-adapters
+          image: enterprise-adapters:local
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: enterprise-adapters-config
+          volumeMounts:
+            - name: approvals
+              mountPath: /var/lib/enterprise-adapters
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8080
+      volumes:
+        - name: approvals
+          persistentVolumeClaim:
+            claimName: enterprise-adapters-approvals

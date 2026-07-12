@@ -1,0 +1,16 @@
+services:
+  enterprise-adapters:
+    build:
+      context: ../..
+      dockerfile: Dockerfile
+    image: enterprise-adapters:local
+    ports:
+      - "8080:8080"
+    environment:
+      ADAPTER_ENV: local
+      KNOWLEDGE_FABRIC_URL: ${KNOWLEDGE_FABRIC_URL:-http://localhost:8080}
+      INTENT_FABRIC_URL: ${INTENT_FABRIC_URL:-http://localhost:8081}
+      APPROVAL_DB_PATH: /var/lib/enterprise-adapters/approvals.sqlite3
+    volumes:
+      - ../../var/enterprise-adapters:/var/lib/enterprise-adapters
+    command: ["python", "-m", "enterprise_adapters.server"]
