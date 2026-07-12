@@ -1,0 +1,147 @@
+src/enterprise_adapters/contracts.py
+  s_1357f4f95d0379::t_c8d6fec66d4350 40-44
+docs/operations-runbook.md
+  s_1357f4f95d0379::t_b0b493cea80bf4 1-16,26-30
+  s_1357f4f95d0379::t_fd22ce47d60894 17-25
+src/enterprise_adapters/server.py
+  s_1357f4f95d0379::t_8e3331e40c7419 9,12-13,15,35-52,63
+  s_1357f4f95d0379::t_5c7143ce5e991d 1-8,10-11,14,16-34,53-62,64-100
+src/enterprise_adapters/policy.py
+  s_1357f4f95d0379::t_c06ea24068f694 1-66
+deploy/kubernetes/service.yaml
+  s_1357f4f95d0379::t_6f7d2b08969d8e 1-11
+tests/test_approval_storage.py
+  s_1357f4f95d0379::t_bc8166680e0045 1-26
+src/enterprise_adapters/auth.py
+  s_1357f4f95d0379::t_2252fc85d29b24 1-36
+src/enterprise_adapters/source_adapters.py
+  s_1357f4f95d0379::t_7c0bf5c054d49f 38-39,66-69,71,83-85
+  s_1357f4f95d0379::t_e92d99a0a2ff7b 1-9,11-15,17-37,40-65,70,72-82,86-105
+  s_1357f4f95d0379::t_1dd3178974a010 10,16
+src/enterprise_adapters/approvals.py
+  s_1357f4f95d0379::t_98f492c11dcd9a 1-41
+src/enterprise_adapters/file_source_adapters.py
+  s_1357f4f95d0379::t_d307ede3bbefa6 1-118
+deploy/kubernetes/namespace.yaml
+  s_1357f4f95d0379::t_9a1421580c5f4b 1-4
+Dockerfile
+  s_1357f4f95d0379::t_a971cdd645a6c3 1-12
+docs/README.md
+  s_1357f4f95d0379::t_e7db2a06dcb004 9
+  s_1357f4f95d0379::t_0c43110568c83b 3,10-16
+  s_1357f4f95d0379::t_771a063c8f5575 7
+src/enterprise_adapters/simulation.py
+  s_1357f4f95d0379::t_44caa05704e3c6 1-98
+deploy/local/docker-compose.yml
+  s_1357f4f95d0379::t_82023f6e24f3fd 1-16
+tests/test_runtime_adapters.py
+  s_1357f4f95d0379::t_54d14102feba2b 1-36
+deploy/kubernetes/deployment.yaml
+  s_1357f4f95d0379::t_ace4cb1e2eb14d 1-39
+src/enterprise_adapters/approval_storage.py
+  s_1357f4f95d0379::t_23778929813d28 1-137
+README.md
+  s_1357f4f95d0379::t_50a4ac52d6098a 84
+  s_1357f4f95d0379::t_be3f7b4f103422 31-46,153-154,156-163,255-256
+  s_1357f4f95d0379::t_332a2df76cc27b 122-152,155
+  s_1357f4f95d0379::t_77b9eff2421985 67,69-79
+  s_1357f4f95d0379::t_379d8a3cababa7 236-237,253-254
+  s_1357f4f95d0379::t_20e8dab866e28a 51,165,172,193-197
+  s_1357f4f95d0379::t_c68b03be4f6b7e 23-30,186,188,238-243,247-249,264-275
+  s_1357f4f95d0379::t_8db67b87da48a5 199-223
+  s_1357f4f95d0379::t_2ee5d2e1fbf0fe 232-235,250-252
+  s_1357f4f95d0379::t_dd0a943303f7f9 3,5-7,9-22,53-55,61-66,68,80,82-83,85-120,164,166-171,173-185,187,189-192,198,224-231,244-246,257-263,276-292,294,296
+  s_1357f4f95d0379::t_e3e81750ed7900 81
+  s_1357f4f95d0379::t_ba749c8099b7b7 121
+tests/test_execution_adapter.py
+  s_1357f4f95d0379::t_97662bf5163a57 1-34
+src/enterprise_adapters/__main__.py
+  s_1357f4f95d0379::t_4bfece8feedebe 9
+tests/test_file_source_adapters.py
+  s_1357f4f95d0379::t_61bb656b6ebc0d 1-55
+tests/test_source_adapters.py
+  s_1357f4f95d0379::t_322eb4434deafe 1-55
+  s_1357f4f95d0379::t_32a87e9078d7c5 56-69
+docs/phase-boundaries.md
+  s_1357f4f95d0379::t_053fc69c5f82f6 1-23
+src/enterprise_adapters/observability.py
+  s_1357f4f95d0379::t_fc536cf5fcac9a 1-39
+tests/test_server.py
+  s_1357f4f95d0379::t_28074a0a45d418 11,19,23,35,39,51
+  s_1357f4f95d0379::t_87d31a600e2c51 1-10,12-18,20-22,24-34,36-38,40-50
+tests/test_observability.py
+  s_1357f4f95d0379::t_1c549db7002721 1-26
+deploy/kubernetes/configmap.yaml
+  s_1357f4f95d0379::t_a3615ee4d9265e 1-10
+src/enterprise_adapters/execution.py
+  s_1357f4f95d0379::t_fb36635416b5eb 1-95
+src/enterprise_adapters/runtime_snapshot_adapters.py
+  s_1357f4f95d0379::t_76addf39e44058 1-67
+docs/adoption-guide.md
+  s_1357f4f95d0379::t_1bbb7d3637c786 46
+  s_1357f4f95d0379::t_7cf2099e41fb4b 593-892
+  s_1357f4f95d0379::t_3f0886d3be13d1 1-45,47-592
+tests/test_audit.py
+  s_1357f4f95d0379::t_8d4f5aa9124b7a 1-36
+deploy/kubernetes/ingress.yaml
+  s_1357f4f95d0379::t_05424123a9e603 1-34
+src/enterprise_adapters/__init__.py
+  s_1357f4f95d0379::t_3b0b2cde3ac49e 2-4
+docs/architecture.md
+  s_1357f4f95d0379::t_236cde877fdfb0 18-39
+tests/test_runtime_snapshot_adapters.py
+  s_1357f4f95d0379::t_2de6ce650aa32e 1-39
+docs/runtime-adapters.md
+  s_1357f4f95d0379::t_4ebd52d30e96d4 1-29
+  s_1357f4f95d0379::t_4956c64164e18d 41-49
+  s_1357f4f95d0379::t_4b0e558e7a48d7 30-40
+src/enterprise_adapters/audit.py
+  s_1357f4f95d0379::t_dd115bb237a12f 1,5-6,9,22,34-99
+  s_1357f4f95d0379::t_eefc151fde5331 2-4,7-8,10-21,23-33
+docs/source-adapters.md
+  s_1357f4f95d0379::t_61c8b7bd8ca255 23-38
+  s_1357f4f95d0379::t_780474fc5ee35c 1-22
+tests/test_simulation_adapter.py
+  s_1357f4f95d0379::t_e9598a7e980478 1-38
+docs/security-model.md
+  s_1357f4f95d0379::t_26973e1120ccb7 18-24
+  s_1357f4f95d0379::t_f3cc06bd396212 1-17
+docs/deployment-kubernetes.md
+  s_1357f4f95d0379::t_55d69fe3330850 1-21
+  s_1357f4f95d0379::t_86a34ec0dd4c86 22-33
+tests/test_policy_and_approvals.py
+  s_1357f4f95d0379::t_cd25f2b9b8f13b 1-48
+deploy/local/docker-compose-tls.yml
+  s_1357f4f95d0379::t_3ff0100e590d49 1-44
+deploy/local/Caddyfile
+  s_1357f4f95d0379::t_39b15f0a7a8911 1-26
+tests/test_auth.py
+  s_1357f4f95d0379::t_eb385c6b58fa59 1-83
+src/enterprise_adapters/runtime_adapters.py
+  s_1357f4f95d0379::t_de31e9c3ff5b37 1-63
+docs/implementation-plan.md
+  s_1357f4f95d0379::t_94c842a7911fef 1-111,122-135
+  s_1357f4f95d0379::t_0f1c8bc4761661 112-121
+deploy/kubernetes/persistentvolumeclaim.yaml
+  s_1357f4f95d0379::t_191821e83af4af 1-11
+docs/deployment-local.md
+  s_1357f4f95d0379::t_c6c5c16d807e11 20-24,38
+  s_1357f4f95d0379::t_2843a13253e201 19,25-37
+  s_1357f4f95d0379::t_3c0106657edf9c 1-18,39-43
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.12",
+  "base_commit_sha": "b59f89cd05b2267da9efd994011e6115bee55b1a",
+  "prompts": {},
+  "sessions": {
+    "s_1357f4f95d0379": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "87cfee0a-2b6a-49fd-81b4-c5ba37c59eb2",
+        "model": "auto"
+      },
+      "human_author": "sagarv48 <17423978+sagarv48@users.noreply.github.com>"
+    }
+  }
+}
