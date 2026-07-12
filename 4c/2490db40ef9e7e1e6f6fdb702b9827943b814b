@@ -1,0 +1,28 @@
+demo/02-demo.py
+  s_1357f4f95d0379::t_31b04a531655cf 1-269
+src/enterprise_adapters/github_issue_adapter.py
+  s_1357f4f95d0379::t_e18af519498e6c 94,99,105-115
+  s_1357f4f95d0379::t_0b68fa4828db27 1-93,95-98,100-104
+tests/test_github_issue_adapter.py
+  s_1357f4f95d0379::t_58a55e5b21dbf3 1-88
+demo/01-ingest-k8s-docs.sh
+  s_1357f4f95d0379::t_99c86c8f96d16e 1-48
+demo/README.md
+  s_1357f4f95d0379::t_d513defb5b3538 1-162
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.12",
+  "base_commit_sha": "4c2490db40ef9e7e1e6f6fdb702b9827943b814b",
+  "prompts": {},
+  "sessions": {
+    "s_1357f4f95d0379": {
+      "agent_id": {
+        "tool": "github-copilot-cli",
+        "id": "87cfee0a-2b6a-49fd-81b4-c5ba37c59eb2",
+        "model": "auto"
+      },
+      "human_author": "sagarv48 <17423978+sagarv48@users.noreply.github.com>"
+    }
+  }
+}
