@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "knowledge-fabric-enterprise-adapters"
+version = "0.1.0"
+description = "Private enterprise adapter layer for Knowledge Fabric and Intent Fabric"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "sagarv48" }]
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0.0"]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
