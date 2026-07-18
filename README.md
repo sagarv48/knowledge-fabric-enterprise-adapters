@@ -136,19 +136,31 @@ python3 -m pip install -e ".[dev]"
 python3 -m pytest
 ```
 
+To enable PDF support for the built-in document adapter:
+
+```bash
+python3 -m pip install -e ".[dev,pdf]"
+```
+
 Then import and use the source adapter directly:
 
 ```python
 from pathlib import Path
-from enterprise_adapters.source_adapters import PrivateMarkdownSourceAdapter
+from enterprise_adapters import AllowlistedDocumentSourceAdapter
+from enterprise_adapters import GitHubRepositorySourceAdapter
 
-adapter = PrivateMarkdownSourceAdapter(
+adapter = AllowlistedDocumentSourceAdapter(
     source_root=Path("/approved/private/root"),
     allowed_roots=[Path("/approved/private/root/docs")],
 )
 
 resources = adapter.list_resources()
-payload = adapter.fetch_resource("docs/policy.md")
+payload = adapter.fetch_resource("docs/policy.pdf")
+
+github = GitHubRepositorySourceAdapter(
+    repository="kubernetes/website",
+    allowed_paths=["content/en/docs"],
+)
 ```
 
 ### 7. Think in adapters, not one giant app
@@ -184,6 +196,8 @@ Current code includes:
 - adapter contracts,
 - basic package entrypoint,
 - health-check HTTP service,
+- built-in document and website source adapters,
+- built-in GitHub repository ingestion adapter,
 - docs for boundaries and operations,
 - local and Kubernetes deployment manifests,
 - minimal tests.

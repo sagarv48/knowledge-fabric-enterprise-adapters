@@ -13,6 +13,7 @@ dependencies = []
 
 [project.optional-dependencies]
 dev = ["pytest>=8.0.0"]
+pdf = ["pypdf>=5.0.0"]
 
 [tool.setuptools]
 package-dir = {"" = "src"}
