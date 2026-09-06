@@ -7,9 +7,8 @@ from accidentally leaking into logs, audit traces, or exception outputs.
 from __future__ import annotations
 
 import logging
+import os
 import re
-from typing import Any
-
 
 _BEARER_PATTERN = re.compile(r"(Bearer\s+)[A-Za-z0-9_\-\.]{8,}", re.IGNORECASE)
 _BASIC_PATTERN = re.compile(r"(Basic\s+)[A-Za-z0-9+/=]{8,}", re.IGNORECASE)
@@ -18,9 +17,6 @@ _QUERY_PARAM_PATTERN = re.compile(
     re.IGNORECASE,
 )
 _HEADER_AUTH_PATTERN = re.compile(r"('authorization':\s*')[^']+(')", re.IGNORECASE)
-
-
-import os
 
 
 def sanitize_log_message(message: str) -> str:

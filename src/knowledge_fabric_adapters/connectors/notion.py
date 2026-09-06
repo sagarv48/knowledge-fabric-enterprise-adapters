@@ -9,7 +9,6 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass
 from typing import Any
-from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 from knowledge_fabric_adapters.contracts import ReadOnlyResource

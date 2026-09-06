@@ -39,9 +39,9 @@ echo "==> Found $DOC_COUNT Markdown files."
 echo "==> Ingesting into knowledge-fabric..."
 cd "$KF_DIR"
 python3 -m knowledge_fabric.ingestion.cli \
-  --source-path "$K8S_DOCS_DIR/content/en/docs" \
-  --source-type markdown \
-  --collection k8s-docs
+  --path "$K8S_DOCS_DIR/content/en/docs" \
+  --recursive \
+  --tenant k8s-docs
 
 echo ""
 echo "Done. K8s docs are now indexed in knowledge-fabric."

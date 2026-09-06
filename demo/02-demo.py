@@ -25,7 +25,7 @@ Required environment variables:
   KF_DB_HOST            localhost
   KF_DB_PORT            5432
   KF_DB_NAME            knowledge_fabric
-  KF_DB_USER            kf_user
+  KF_DB_USER            knowledge_fabric
   KF_DB_PASSWORD        (set in your .env)
 """
 
@@ -85,7 +85,7 @@ def retrieve_evidence(query: str, top_k: int = 5):
         host = os.environ.get("KF_DB_HOST", "localhost")
         port = int(os.environ.get("KF_DB_PORT", "5432"))
         name = os.environ.get("KF_DB_NAME", "knowledge_fabric")
-        user = os.environ.get("KF_DB_USER", "kf_user")
+        user = os.environ.get("KF_DB_USER", "knowledge_fabric")
         password = os.environ.get("KF_DB_PASSWORD", "")
 
     try:
@@ -95,7 +95,8 @@ def retrieve_evidence(query: str, top_k: int = 5):
             retrieval_store=store,
             embedding_provider=MockEmbeddingProvider(),
         )
-        package = pipeline.retrieve_evidence(query_text=query, top_k=top_k)
+        tenant_id = os.environ.get("KF_TENANT_ID", "k8s-docs")
+        package = pipeline.retrieve_evidence(query_text=query, top_k=top_k, tenant_id=tenant_id)
         return package
     except Exception as exc:
         print(f"\n[WARNING] Could not connect to knowledge-fabric database: {exc}")

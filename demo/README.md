@@ -33,8 +33,14 @@ Create one at https://github.com/settings/tokens/new
 
 Required scope: **repo** (for issue creation on public repos a fine-grained PAT with `Issues: write` on `sagarv48/knowledge-fabric-demo` is enough).
 
-### 3. Repos installed
+### 3. Packages installed
 
+Option A — Install packages (recommended):
+```bash
+pip install knowledge-fabric intent-fabric knowledge-fabric-enterprise-adapters
+```
+
+Option B — Sibling local clones:
 ```bash
 cd ../knowledge-fabric && pip install -e ".[dev]"
 cd ../intent-fabric    && pip install -e ".[dev]"
@@ -80,7 +86,7 @@ export FOUNDRY_PLAN_MODEL=mistral-nemo-12b-instruct-generic-gpu
 export KF_DB_HOST=localhost
 export KF_DB_PORT=5432
 export KF_DB_NAME=knowledge_fabric
-export KF_DB_USER=kf_user
+export KF_DB_USER=knowledge_fabric
 export KF_DB_PASSWORD=<your-password>
 ```
 

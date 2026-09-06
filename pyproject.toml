@@ -43,6 +43,10 @@ include = ["enterprise_adapters*", "knowledge_fabric_adapters*"]
 line-length = 100
 target-version = "py311"
 
+[tool.ruff.lint]
+select = ["E", "F", "W"]
+ignore = ["E501"]
+
 [tool.ruff.lint.per-file-ignores]
 "tests/*" = ["ALL"]
 
