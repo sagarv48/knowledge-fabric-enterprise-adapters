@@ -86,8 +86,12 @@ class NotionSourceAdapter:
         url = f"https://api.notion.com/v1{path}"
         data = json.dumps(payload).encode("utf-8") if payload else None
         req = Request(url, headers=self._headers(), data=data, method=method)
-        with urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode("utf-8"))
+        try:
+            with urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except Exception as exc:
+            from knowledge_fabric_adapters.security import sanitize_exception
+            raise RuntimeError(f"Notion request failed: {sanitize_exception(exc)}") from None
 
     def list_resources(self) -> list[ReadOnlyResource]:
         """List all pages from target databases or workspace search."""

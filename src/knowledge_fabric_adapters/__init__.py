@@ -28,6 +28,12 @@ from knowledge_fabric_adapters.contracts import (
     ReadOnlyResource,
     RuntimeActionAdapter,
     RuntimeMetadataAdapter,
+    verify_approval_signature,
+)
+from knowledge_fabric_adapters.security import (
+    RedactingLoggingFilter,
+    sanitize_exception,
+    sanitize_log_message,
 )
 
 __all__ = [
@@ -36,10 +42,14 @@ __all__ = [
     "ReadOnlyResource",
     "RuntimeActionAdapter",
     "RuntimeMetadataAdapter",
+    "verify_approval_signature",
     "ConfluenceSourceAdapter",
     "NotionSourceAdapter",
     "GoogleDriveSourceAdapter",
     "JiraSourceAdapter",
+    "sanitize_log_message",
+    "sanitize_exception",
+    "RedactingLoggingFilter",
 ]
 
 __version__ = "0.1.0"

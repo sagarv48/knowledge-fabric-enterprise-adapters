@@ -57,8 +57,12 @@ class JiraSourceAdapter:
         if query_params:
             url = f"{url}?{urlencode(query_params)}"
         req = Request(url, headers=self._headers(), method="GET")
-        with urlopen(req, timeout=30) as resp:
-            return json.loads(resp.read().decode("utf-8"))
+        try:
+            with urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except Exception as exc:
+            from knowledge_fabric_adapters.security import sanitize_exception
+            raise RuntimeError(f"Jira request failed: {sanitize_exception(exc)}") from None
 
     def list_resources(self) -> list[ReadOnlyResource]:
         """List all issues matching the configured JQL query."""

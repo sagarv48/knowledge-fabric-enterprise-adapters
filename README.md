@@ -66,6 +66,20 @@ In plain English:
 - Credentials committed to git
 - Internal URLs or private source content in public docs
 
+## Installation & Quickstart
+
+### 1. As a Python Package
+```bash
+pip install knowledge-fabric-enterprise-adapters
+```
+
+### 2. Local Development & Contributing
+```bash
+git clone https://github.com/sagarv48/knowledge-fabric-enterprise-adapters.git
+cd knowledge-fabric-enterprise-adapters
+python3 -m pip install -e ".[dev]"
+```
+
 ## How to use this repo
 
 ### 1. Start with the adoption guide

@@ -128,3 +128,55 @@ class RuntimeActionAdapter(Protocol):
         This method should only be called with an action that has been through
         the policy engine and received explicit human approval.
         """
+
+
+import hashlib
+import hmac
+import logging
+import os
+
+logger = logging.getLogger("knowledge_fabric_adapters")
+
+
+def verify_approval_signature(
+    *,
+    approval_id: str,
+    plan_id: str,
+    step_ids: list[str],
+    decision: str,
+    reviewer: str,
+    timestamp: str,
+    signature: str,
+    secret_key: str | None = None,
+    enforcement_mode: str | None = None,
+) -> bool:
+    """Verify an approval decision's cryptographic HMAC-SHA256 signature in constant time.
+
+    Used by execution adapters to ensure that destructive actions are backed by an
+    authentic, non-repudiable human-in-the-loop authorization token.
+
+    Modes:
+        - "enforce" (default): strictly requires a valid cryptographic signature.
+        - "permissive" / "audit_only": logs a warning if missing or invalid, but returns True
+          to avoid hindering local development or test staging setups. Configured via
+          FABRIC_APPROVAL_ENFORCEMENT=permissive.
+    """
+    mode = (enforcement_mode or os.environ.get("FABRIC_APPROVAL_ENFORCEMENT", "enforce")).lower().strip()
+    key = secret_key or os.environ.get("FABRIC_SIGNING_KEY", "fabric-insecure-dev-hmac-key-change-in-production")
+    sorted_steps = ",".join(sorted(step_ids))
+    canonical = f"{approval_id}|{plan_id}|{sorted_steps}|{decision.strip().lower()}|{reviewer.strip()}|{timestamp.strip()}"
+    expected = hmac.new(key.encode("utf-8"), canonical.encode("utf-8"), hashlib.sha256).hexdigest()
+
+    is_match = bool(signature and isinstance(signature, str) and hmac.compare_digest(expected, signature))
+
+    if not is_match and mode in ("permissive", "audit_only", "disabled"):
+        logger.warning(
+            "Approval signature mismatch or missing for %s (running in %s mode; bypassing block)",
+            approval_id,
+            mode,
+        )
+        return True
+
+    return is_match
+
+
