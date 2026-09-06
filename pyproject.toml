@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "knowledge-fabric-enterprise-adapters"
-version = "0.1.0"
+version = "0.1.1"
 description = "Private enterprise adapter layer and SaaS source connectors for Knowledge Fabric and Intent Fabric"
 readme = "README.md"
 license = { text = "Apache-2.0" }
