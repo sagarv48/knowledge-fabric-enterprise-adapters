@@ -54,7 +54,7 @@ def _block_to_markdown(block: dict[str, Any]) -> str:
     return ""
 
 
-@dataclass(slots=True)
+@dataclass
 class NotionSourceAdapter:
     """Read-only adapter for Notion databases and pages.
 

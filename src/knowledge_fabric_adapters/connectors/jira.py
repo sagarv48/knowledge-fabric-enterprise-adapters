@@ -16,7 +16,7 @@ from urllib.request import Request, urlopen
 from knowledge_fabric_adapters.contracts import ReadOnlyResource
 
 
-@dataclass(slots=True)
+@dataclass
 class JiraSourceAdapter:
     """Read-only adapter for Jira issues, incidents, and decision records.
 

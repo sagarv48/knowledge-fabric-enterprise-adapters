@@ -57,7 +57,7 @@ class _ConfluenceHTMLToMarkdown(HTMLParser):
         return re.sub(r"\n{3,}", "\n\n", raw)
 
 
-@dataclass(slots=True)
+@dataclass
 class ConfluenceSourceAdapter:
     """Read-only adapter for Atlassian Confluence spaces and pages.
 
