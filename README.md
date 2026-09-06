@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/banner.jpg" alt="Knowledge Fabric & Intent Fabric" width="100%" style="max-width: 900px; border-radius: 12px;" />
+</p>
+
 # Knowledge Fabric Enterprise Adapters
 
 This is the private adapter layer that connects the open-source cores to enterprise-only systems.
@@ -295,7 +299,34 @@ docker compose -f deploy/local/docker-compose.yml up --build
 - Phase 2: Intent Fabric — planning, approval, simulation only
 - Phase 3: this repo — private enterprise adapters
 
-Keep those boundaries sharp. That makes the whole system easier to reason about.
+---
+
+## Community Adapters & Open Source Contracts
+
+To enable the broader community to write third-party adapters (e.g. Confluence, Google Drive, Notion, GitLab, Jira) without requiring access to private code, this repo provides the zero-dependency contract package: `knowledge_fabric_adapters`.
+
+### Using Public Contracts
+```python
+from knowledge_fabric_adapters import (
+    KnowledgeSourceAdapter,
+    RuntimeMetadataAdapter,
+    RuntimeActionAdapter,
+    ReadOnlyResource,
+)
+
+class MyCommunityConfluenceAdapter:
+    @property
+    def source_type(self) -> str:
+        return "confluence"
+
+    def list_resources(self) -> list[ReadOnlyResource]:
+        ...
+
+    def fetch_resource(self, resource_id: str) -> dict[str, object]:
+        ...
+```
+
+The contract package has zero third-party runtime dependencies and is designed for standalone PyPI distribution (`pyproject_adapters.toml`).
 
 ## Contributing
 

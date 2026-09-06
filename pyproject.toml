@@ -5,14 +5,31 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "knowledge-fabric-enterprise-adapters"
 version = "0.1.0"
-description = "Private enterprise adapter layer for Knowledge Fabric and Intent Fabric"
+description = "Private enterprise adapter layer and SaaS source connectors for Knowledge Fabric and Intent Fabric"
 readme = "README.md"
+license = { text = "Apache-2.0" }
 requires-python = ">=3.11"
-authors = [{ name = "sagarv48" }]
+authors = [
+  { name = "sagarv48" }
+]
+keywords = ["mcp", "knowledge-fabric", "adapters", "rag", "retrieval", "enterprise"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: Apache Software License",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries",
+]
+# Core connectors and contracts use Python standard library only
 dependencies = []
 
+[project.urls]
+Homepage = "https://github.com/sagarv48/knowledge-fabric-enterprise-adapters"
+"Bug Tracker" = "https://github.com/sagarv48/knowledge-fabric-enterprise-adapters/issues"
+
 [project.optional-dependencies]
-dev = ["pytest>=8.0.0"]
+dev = ["pytest>=8.0.0", "ruff>=0.4.0", "pyright>=1.1.0"]
 pdf = ["pypdf>=5.0.0"]
 
 [tool.setuptools]
@@ -20,3 +37,13 @@ package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["enterprise_adapters*", "knowledge_fabric_adapters*"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.pyright]
+include = ["src"]
+pythonVersion = "3.11"
+typeCheckingMode = "standard"
