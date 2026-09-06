@@ -11,11 +11,32 @@
 
 <p align="center">
   <a href="https://github.com/sagarv48/knowledge-fabric-enterprise-adapters/actions"><img src="https://img.shields.io/badge/CI-passing-brightgreen.svg" alt="CI Status"></a>
+  <a href="https://github.com/sagarv48/knowledge-fabric-enterprise-adapters/releases"><img src="https://img.shields.io/badge/Release-v0.1.1-blue.svg" alt="Release"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
-  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.11%20%7C%203.12-blue.svg" alt="Python Versions"></a>
   <a href="Dockerfile"><img src="https://img.shields.io/badge/Docker-Multi--Stage-2496ED.svg" alt="Docker"></a>
   <a href="deploy/kubernetes"><img src="https://img.shields.io/badge/Kubernetes-Production%20Manifests-326CE5.svg" alt="Kubernetes"></a>
+  <a href="https://github.com/sagarv48/knowledge-fabric"><img src="https://img.shields.io/badge/Ecosystem-Knowledge%20Fabric-9B51E0.svg" alt="Knowledge Fabric"></a>
 </p>
+
+---
+
+## ⚡ 30-Second Quickstart
+
+```python
+from knowledge_fabric_enterprise_adapters.sanitization import SecretScrubber
+from knowledge_fabric_enterprise_adapters.adapters import SlackSourceAdapter
+
+# 1. Automated Secret & PII Scrubbing
+scrubber = SecretScrubber()
+clean_text = scrubber.scrub(
+    "Engineering Slack alert: Production AWS key AKIAIOSFODNN7EXAMPLE rotated by john@corp.com"
+)
+# Result: "Engineering Slack alert: Production AWS key [AWS_KEY_REDACTED] rotated by [EMAIL_REDACTED]"
+
+# 2. Ingest safely into Knowledge Fabric
+adapter = SlackSourceAdapter(scrubber=scrubber)
+docs = adapter.fetch_channel_history(channel_id="C01234567")
+```
 
 ---
 
