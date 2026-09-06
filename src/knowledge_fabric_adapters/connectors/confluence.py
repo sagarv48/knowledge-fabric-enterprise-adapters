@@ -13,7 +13,6 @@ from dataclasses import dataclass
 from datetime import datetime
 from html.parser import HTMLParser
 from typing import Any
-from urllib.error import HTTPError
 from urllib.parse import quote, urlencode
 from urllib.request import Request, urlopen
 
@@ -123,7 +122,7 @@ class ConfluenceSourceAdapter:
                 }
                 try:
                     payload = self._request_json("/rest/api/content", params)
-                except Exception as exc:
+                except Exception:
                     break
 
                 results = payload.get("results", [])

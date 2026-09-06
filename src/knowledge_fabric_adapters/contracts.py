@@ -22,6 +22,10 @@ Example adapter implementation:
 
 from __future__ import annotations
 
+import hashlib
+import hmac
+import logging
+import os
 from dataclasses import dataclass, field
 from typing import Protocol
 
@@ -129,11 +133,6 @@ class RuntimeActionAdapter(Protocol):
         the policy engine and received explicit human approval.
         """
 
-
-import hashlib
-import hmac
-import logging
-import os
 
 logger = logging.getLogger("knowledge_fabric_adapters")
 
