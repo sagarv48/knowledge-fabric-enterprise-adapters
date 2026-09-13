@@ -20,7 +20,8 @@ import urllib.request
 import urllib.error
 
 from enterprise_adapters.audit import build_audit_trail
-from enterprise_adapters.execution import ApprovedRuntimeActionAdapter
+from enterprise_adapters.execution import ApprovedRuntimeActionAdapter, _require_policy_decision
+from enterprise_adapters.policy import PolicyDecisionType
 
 
 _GITHUB_API = "https://api.github.com"
@@ -55,8 +56,19 @@ class GitHubIssueAdapter(ApprovedRuntimeActionAdapter):
         return cls(token=token, repo=repo)
 
     def execute_action(self, action: dict) -> dict:
-        # Parent class enforces: policy_decision present, decision==ALLOW, approval_id present
+        policy_decision = _require_policy_decision(action)
+        if policy_decision.decision is not PolicyDecisionType.ALLOW:
+            raise PermissionError("Approved execution requires an allow policy decision.")
+
+        approval_id = str(action.get("approval_id", "")).strip()
+        if not approval_id:
+            raise PermissionError("Approved execution requires an approval_id.")
+
+        # Cryptographic verification before any external HTTP mutation
+        self._verify_approval_signature(action, approval_id)
+
         prepared = self.prepare_action(action)
+
 
         inner = action.get("payload", {})
         title = str(inner.get("title", prepared["action_name"]))

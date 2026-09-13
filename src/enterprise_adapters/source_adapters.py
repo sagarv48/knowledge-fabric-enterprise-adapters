@@ -40,13 +40,13 @@ class PrivateMarkdownSourceAdapter:
         if file_path.suffix.lower() not in _SUPPORTED_EXTENSIONS:
             raise ValueError(f"Unsupported source type: {file_path.suffix}")
 
-        text = file_path.read_text(encoding="utf-8")
+        text = file_path.read_bytes().decode("utf-8")
         normalized = _normalize_markdown(text)
         stat = file_path.stat()
         return {
             "resource_id": resource_id,
             "path": str(file_path),
-            "relative_path": str(file_path.relative_to(self.source_root)),
+            "relative_path": file_path.relative_to(self.source_root).as_posix(),
             "content": normalized,
             "metadata": {
                 "name": file_path.name,
@@ -87,11 +87,11 @@ class PrivateMarkdownSourceAdapter:
     def _resource_from_path(self, file_path: Path) -> ReadOnlyResource:
         stat = file_path.stat()
         return ReadOnlyResource(
-            resource_id=str(file_path.relative_to(self.source_root)),
+            resource_id=file_path.relative_to(self.source_root).as_posix(),
             name=file_path.stem,
             metadata={
                 "path": str(file_path),
-                "relative_path": str(file_path.relative_to(self.source_root)),
+                "relative_path": file_path.relative_to(self.source_root).as_posix(),
                 "extension": file_path.suffix.lower(),
                 "size_bytes": stat.st_size,
                 "modified_at": datetime.fromtimestamp(stat.st_mtime, tz=UTC).isoformat(),
@@ -100,6 +100,8 @@ class PrivateMarkdownSourceAdapter:
 
 
 def _normalize_markdown(text: str) -> str:
-    lines = [line.rstrip() for line in text.replace("\r\n", "\n").replace("\r", "\n").split("\n")]
+    text = text.replace("\r\r\n", "\n").replace("\r\n", "\n").replace("\r", "\n")
+    lines = [line.rstrip() for line in text.split("\n")]
     normalized = "\n".join(lines).strip()
     return normalized + ("\n" if normalized else "")
+

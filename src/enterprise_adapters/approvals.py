@@ -39,3 +39,73 @@ class ApprovalPackageGenerator:
 
 def _stable_id(prefix: str, seed: str) -> str:
     return f"{prefix}_{sha1(seed.encode('utf-8')).hexdigest()[:12]}"
+
+
+def canonical_approval_payload(
+    *,
+    approval_id: str,
+    plan_id: str,
+    step_ids: list[str],
+    decision: str,
+    reviewer: str,
+    timestamp: str,
+) -> bytes:
+    """Create deterministic canonical byte string representing an approval decision."""
+    sorted_steps = ",".join(sorted(step_ids))
+    canonical_str = f"{approval_id}|{plan_id}|{sorted_steps}|{decision.strip().lower()}|{reviewer.strip()}|{timestamp.strip()}"
+    return canonical_str.encode("utf-8")
+
+
+def compute_approval_signature(
+    *,
+    approval_id: str,
+    plan_id: str,
+    step_ids: list[str],
+    decision: str,
+    reviewer: str,
+    timestamp: str,
+    secret_key: str | None = None,
+) -> str:
+    """Compute HMAC-SHA256 hex signature over canonical approval decision."""
+    import hashlib
+    import hmac
+    import os
+
+    key = secret_key or os.environ.get("FABRIC_SIGNING_KEY", "fabric-insecure-dev-hmac-key-change-in-production")
+    payload = canonical_approval_payload(
+        approval_id=approval_id,
+        plan_id=plan_id,
+        step_ids=step_ids,
+        decision=decision,
+        reviewer=reviewer,
+        timestamp=timestamp,
+    )
+    return hmac.new(key.encode("utf-8"), payload, hashlib.sha256).hexdigest()
+
+
+def verify_approval_signature(
+    *,
+    approval_id: str,
+    plan_id: str,
+    step_ids: list[str],
+    decision: str,
+    reviewer: str,
+    timestamp: str,
+    signature: str,
+    secret_key: str | None = None,
+    enforcement_mode: str | None = None,
+) -> bool:
+    """Verify approval decision cryptographic HMAC-SHA256 signature in constant time."""
+    from knowledge_fabric_adapters.contracts import verify_approval_signature as _kfa_verify
+    return _kfa_verify(
+        approval_id=approval_id,
+        plan_id=plan_id,
+        step_ids=step_ids,
+        decision=decision,
+        reviewer=reviewer,
+        timestamp=timestamp,
+        signature=signature,
+        secret_key=secret_key,
+        enforcement_mode=enforcement_mode,
+    )
+
