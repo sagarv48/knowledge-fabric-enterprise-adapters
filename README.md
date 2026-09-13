@@ -23,19 +23,23 @@
 ## ⚡ 30-Second Quickstart
 
 ```python
-from knowledge_fabric_enterprise_adapters.sanitization import SecretScrubber
-from knowledge_fabric_enterprise_adapters.adapters import SlackSourceAdapter
+from knowledge_fabric_adapters.security import sanitize_log_message
+from knowledge_fabric_adapters import ConfluenceSourceAdapter, AdapterContext
 
-# 1. Automated Secret & PII Scrubbing
-scrubber = SecretScrubber()
-clean_text = scrubber.scrub(
-    "Engineering Slack alert: Production AWS key AKIAIOSFODNN7EXAMPLE rotated by john@corp.com"
+# 1. Automated Secret & Token Scrubbing
+clean_text = sanitize_log_message(
+    "Engineering alert: rotating Bearer eyJhbGciOiJIUzI1Ni... for api_key=secret-token"
 )
-# Result: "Engineering Slack alert: Production AWS key [AWS_KEY_REDACTED] rotated by [EMAIL_REDACTED]"
+# Result: "Engineering alert: rotating Bearer [REDACTED] for api_key=[REDACTED]"
 
 # 2. Ingest safely into Knowledge Fabric
-adapter = SlackSourceAdapter(scrubber=scrubber)
-docs = adapter.fetch_channel_history(channel_id="C01234567")
+context = AdapterContext(adapter_name="confluence", environment="production")
+adapter = ConfluenceSourceAdapter(
+    base_url="https://wiki.example.com",
+    space_keys=["ENG"],
+    api_token="secret-token",
+)
+resources = list(adapter.list_resources(context))
 ```
 
 ---
@@ -118,14 +122,13 @@ Before any document chunk touches `knowledge-fabric` or enters an embedding mode
 * **Exception & Log Sanitization**: Masks credentials in HTTP error bodies and Python stack traces before sending to observability collectors
 
 ```python
-from enterprise_adapters.security import SecretScrubber
+from knowledge_fabric_adapters.security import sanitize_log_message
 
-scrubber = SecretScrubber()
-raw_text = "Deploying to AWS with AKIAIOSFODNN7EXAMPLE and Bearer eyJhbGciOiJIUzI1Ni..."
-clean_text = scrubber.scrub(raw_text)
+raw_text = "Deploying to AWS with Authorization: Bearer eyJhbGciOiJIUzI1Ni... and password=supersecret"
+clean_text = sanitize_log_message(raw_text)
 
 # Result:
-# "Deploying to AWS with [REDACTED_AWS_KEY] and Bearer [REDACTED_BEARER_TOKEN]"
+# "Deploying to AWS with Authorization: Bearer [REDACTED] and password=[REDACTED]"
 ```
 
 ---
@@ -135,22 +138,24 @@ clean_text = scrubber.scrub(raw_text)
 To prevent unauthorized, unapproved, or tampered AI agent actions from modifying enterprise systems, execution adapters enforce cryptographic signature validation:
 
 ```python
-from enterprise_adapters.security import verify_approval_signature
+import os
+from enterprise_adapters.approvals import verify_approval_signature
 
 # Validates that the approval token was signed by the authorized Intent Fabric key
 # and has not expired or been modified in transit
 is_valid = verify_approval_signature(
+    approval_id="appr_87f2e1a9",
     plan_id="plan_98234",
-    action="jira:create_issue",
-    decision="Approved",
+    step_ids=["step_1"],
+    decision="approved",
     reviewer="secops-lead@company.com",
-    timestamp=1725624000,
+    timestamp="1725624000",
     signature=incoming_hmac_token,
     secret_key=os.environ["FABRIC_SIGNING_KEY"],
 )
 
 if not is_valid:
-    raise SecurityViolation("Action aborted: invalid or unverified approval signature.")
+    raise RuntimeError("Action aborted: invalid or unverified approval signature.")
 ```
 
 ---
